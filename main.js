@@ -2,14 +2,30 @@
 const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
-// Your JavaScript code goes here!
+const colorStates = {
+  "" : "red",
+  "red": ""
+};
 
+const articleHearts = document.querySelectorAll(".like-glyph");
 
+function likeCallback(e) {
+  const heart = e.target;
+  mimicServerCall()
+    .then(function(serverMessage) {
+      alert("You liked that!");
+      alert(serverMessage);
+      heart.innerText = glyphStates[heart.innerText];
+      heart.style.color = colorStates[heart.style.color];
+    })
+    .catch(function(error) {
+      alert("That didn/'t work! Try again later.");
+    });
+}
 
-
-//------------------------------------------------------------------------------
-// Don't change the code below: this function mocks the server response
-//------------------------------------------------------------------------------
+for (const glyph of articleHearts) {
+  glyph.addEventListener("click", likeCallback);
+  }
 
 function mimicServerCall(url="http://mimicServer.example.com", config={}) {
   return new Promise(function(resolve, reject) {
